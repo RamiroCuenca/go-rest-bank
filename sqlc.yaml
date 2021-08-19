@@ -1,7 +1,7 @@
 version: "1"
 packages:
-  - path: "tutorial"
-    name: "tutorial"
-    engine: "postgresql"
-    schema: "schema.sql"
-    queries: "query.sql"
+  - path: "./db/sqlc"        # Path where the Go package will be stored
+    name: "db"               # Name of the Go package that will be generated
+    engine: "postgresql"     # Tell sqlc what db engine we use
+    schema: ".db/migration/" # Path of the db schema (Migrations folder)
+    queries: "./db/query/"   # Tell sqlc where to find the SQL files
