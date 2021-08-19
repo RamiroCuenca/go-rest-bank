@@ -10,6 +10,9 @@ createdb:
 dropdb:
 	docker exec -it postgres1 dropdb bank_app
 
+# This rule runs the migrations up
+run-migrations-up:
+	migrate --path db/migration --database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" --verbose up
 
 # .PHONY tell explicitly to MAKE that those rules are not associated with files
-.PHONY: postgres createdb dropb
+.PHONY: postgres createdb dropb run-migrations-up
