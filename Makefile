@@ -17,5 +17,9 @@ run-migrations-up:
 run-migrations-down:
 	migrate --path db/migration --database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" --verbose down
 
+# This rule runs sqlc and generates Go code from our SQL code
+sqlc:
+	sqlc generate 
+
 # .PHONY tell explicitly to MAKE that those rules are not associated with files
-.PHONY: postgres createdb dropb run-migrations-up run-migrations-down
+.PHONY: postgres createdb dropb run-migrations-up run-migrations-down sqlc
