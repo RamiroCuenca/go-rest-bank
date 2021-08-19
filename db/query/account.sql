@@ -1,5 +1,5 @@
 -- name: CreateAccount :one
-INSERT INTO accounts (
+INSERT INTO account (
 	owner,
 	balance,
 	currency
