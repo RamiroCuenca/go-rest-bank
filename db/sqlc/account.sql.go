@@ -8,7 +8,7 @@ import (
 )
 
 const createAccount = `-- name: CreateAccount :one
-INSERT INTO account (
+INSERT INTO accounts (
 	owner,
 	balance,
 	currency
@@ -37,7 +37,7 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (A
 }
 
 const deleteAccount = `-- name: DeleteAccount :exec
-DELETE FROM account WHERE id = $1
+DELETE FROM accounts WHERE id = $1
 `
 
 func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
@@ -45,13 +45,13 @@ func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
 	return err
 }
 
-const getAccount = `-- name: GetAccount :one
-SELECT id, owner, balance, currency, created_at FROM account
+const gets = `-- name: Gets :one
+SELECT id, owner, balance, currency, created_at FROM accounts
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
-	row := q.db.QueryRowContext(ctx, getAccount, id)
+func (q *Queries) Gets(ctx context.Context, id int64) (Account, error) {
+	row := q.db.QueryRowContext(ctx, gets, id)
 	var i Account
 	err := row.Scan(
 		&i.ID,
@@ -64,7 +64,7 @@ func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
 }
 
 const listAccounts = `-- name: ListAccounts :many
-SELECT id, owner, balance, currency, created_at FROM account
+SELECT id, owner, balance, currency, created_at FROM accounts
 ORDER BY id
 LIMIT $1
 OFFSET $2
@@ -105,7 +105,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 }
 
 const updateAccount = `-- name: UpdateAccount :exec
-UPDATE account 
+UPDATE accounts
 SET balance = $2
 WHERE id = $1
 `
