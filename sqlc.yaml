@@ -1,7 +1,14 @@
 version: "1"
 packages:
-  - path: "./db/sqlc"        # Path where the Go package will be stored
-    name: "db"               # Name of the Go package that will be generated
-    engine: "postgresql"     # Tell sqlc what db engine we use
-    schema: "./db/migration/" # Path of the db schema (Migrations folder)
-    queries: "./db/query/"   # Tell sqlc where to find the SQL files
+  - name: "db"                  # Name of the Go package that will be generated
+    path: "./db/sqlc"           # Path where the Go package will be stored
+    queries: "./db/query/"      # Tell sqlc where to find the SQL files
+    schema: "./db/migration/"   # Path of the db schema (Migrations folder)
+    engine: "postgresql"        # Tell sqlc what db engine we use
+    emit_prepared_queries: false # Optimizes performance
+    emit_exact_table_names: false
+    emit_empty_slices: false
+    emit_exported_queries: false
+    emit_json_tags: true        # Generate json tags on models file
+    json_tags_case_style: "snake"
+    emit_interface: false
